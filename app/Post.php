@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+	public function author() {
+		return $this->belongsTo(User::class);
+	}
+
+
     //this is accessor method (starting with get and ending with Attribute)
 	public function getImageUrlAttribute($value) {
 		$imageUrl = '';
@@ -16,5 +21,13 @@ class Post extends Model
 			}
 		}
 		return $imageUrl;
+	}
+
+	public function getDateAttribute(  ) {
+		return $this->created_at->diffForHumans();
+	}
+
+	public function scopeLatestFirst() {
+		return $this->orderBy('created_at', 'desc');
 	}
 }

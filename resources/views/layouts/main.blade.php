@@ -36,7 +36,7 @@
     </nav>
 </header>
 
-@yield('content');
+@yield('content')
 
 <footer>
     <div class="container">
