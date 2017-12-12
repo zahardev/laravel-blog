@@ -20,10 +20,14 @@ class PostsTableSeeder extends Seeder
 
 	    $faker = Factory::create();
 
+	    $date = \Carbon\Carbon::create(2017, 12, 1, 9);
+
 	    for ( $i = 1; $i <= 10; $i ++ ) {
 	    	$image = 'Post_Image_' . rand(1,5) . '.jpg';
-			$date = date('Y-m-d H:i:s', strtotime("2017-12-10 08:00:00 + {$i} days"));
 
+	    	$date->addDays($i);
+			$publishedDate = clone($date);
+			$createdDate = clone($date);
 
 	    	$posts[] = [
 	    		'author_id' => rand(1,3),
@@ -32,8 +36,9 @@ class PostsTableSeeder extends Seeder
 				'body' => $faker->paragraphs(rand(10,15), true),
 			    'slug' => $faker->slug(),
 			    'image' => rand(0,1) == 1 ? $image : null,
-			    'created_at' => new DateTime(),
-			    'updated_at' => new DateTime(),
+			    'created_at' => $createdDate,
+			    'updated_at' => $createdDate,
+			    'published_at' => $i < 5 ? $publishedDate : ( rand(0,1) == 0 ? null : $publishedDate->addDays(4) ),
 		    ];
 	    }
 

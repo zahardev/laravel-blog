@@ -11,7 +11,10 @@ class BlogController extends Controller
 
     public function index(){
     	//\DB::enableQueryLog();
-    	$posts = Post::with('author')->latestFirst()->simplePaginate($this->limit);
+    	$posts = Post::with('author')
+	                 ->latestFirst()
+		             ->published()
+	                 ->simplePaginate($this->limit);
     	return view('blog.index', compact('posts'));
     	//dd(\DB::getQueryLog());
     }
